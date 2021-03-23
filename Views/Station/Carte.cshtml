@@ -28,7 +28,7 @@
             @foreach (var station in Model)
             {
                 <text>
-                    "@station.Name": { "lat": @station.Latitude, "lon": @station.Longitude },
+                    "@station.Name": { "lat": @station.Latitude, "lon": @station.Longitude, "label": "@Html.Raw(String.Format("Nb vélo(s) :  {0} <br /> Nb place(s) : {1}", station.BikeCountTotal, station.SlotCount))" },
                 </text>
             }
         };
@@ -46,7 +46,7 @@
             // Nous parcourons la liste des stations
             for (station in stations) {
                 var marker = L.marker([stations[station].lat, stations[station].lon]).addTo(macarte);
-                marker.bindPopup(station);
+                marker.bindPopup(stations[station].label);
             }
         }
         window.onload = function () {
