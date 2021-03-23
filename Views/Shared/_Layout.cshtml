@@ -6,6 +6,7 @@
     <title>@ViewData["Title"] - VCubWatcher</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    @await RenderSectionAsync("Stylesheets", required: false)
 </head>
 <body>
     <header>
@@ -28,7 +29,7 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Station" asp-action="Carte">Carte</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Favoris">Favoris</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Station" asp-action="Favoris">Favoris</a>
                         </li>
                     </ul>
                 </div>

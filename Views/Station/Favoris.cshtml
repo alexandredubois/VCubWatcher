@@ -1,6 +1,6 @@
 ﻿@model List<BikeStation>
 
-<h1>Liste des stations</h1>
+<h1>Favoris</h1>
 
 <table class="table">
     <thead>
@@ -20,7 +20,7 @@
                 <td>@station.BikeCountTotal</td>
                 <td>@station.ElectricBikeCount</td>
                 <td>@station.SlotCount</td>
-                <td><a class="btn btn-info" asp-controller="User" asp-action="AddFavorite" asp-route-stationId="@station.Id">Ajouter</a></td>
+                <td><a class="btn btn-danger" asp-controller="User" asp-action="RemoveFavorite" asp-route-stationId="@station.Id">Retirer</a></td>
             </tr>
         }
     </tbody>

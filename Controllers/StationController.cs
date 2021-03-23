@@ -1,25 +1,56 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
-using System.Threading.Tasks;
 using VCubWatcher.Models;
 
 namespace VCubWatcher.Controllers
 {
     public class StationController : Controller
     {
+        private const string _cookieKey = "stations";
+
         public IActionResult Liste()
         {
             var stations = GetBikeStationsFromApi();
+
+
+
             return View(stations);
         }
 
         public IActionResult Carte()
         {
-            return View();
+            var stations = GetBikeStationsFromApi();
+            return View(stations);
+        }
+
+        public IActionResult Favoris()
+        {
+            //On récupère les 183 stations
+            var stations = GetBikeStationsFromApi();
+            
+            //On récupère la liste des stations en favoris
+            List<int> favoriteStationIds ;
+            if (Request.Cookies.ContainsKey(_cookieKey))
+            {
+                favoriteStationIds = JsonConvert.DeserializeObject<List<int>>(Request.Cookies[_cookieKey]);
+            } else
+            {
+                favoriteStationIds = new List<int>();
+            }
+
+            //On crée une liste de station vide dans laquelle on copiera les stations dont les IDs sont dans le cookie
+            List<BikeStation> favorites = new List<BikeStation>();
+            foreach (var stationId in favoriteStationIds)
+            {
+                foreach (var station in stations)
+                {
+                    if (station.Id == stationId) favorites.Add(station);
+                }
+            }
+
+            return View(favorites);
         }
 
         private static List<BikeStation> GetBikeStationsFromApi()
